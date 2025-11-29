@@ -1,20 +1,34 @@
 <?php
-$a_bool = true;   // bool
-$a_str  = "foo";  // string
-$a_str2 = 'foo';  // string
-$an_int = 12;     // int
 
-echo get_debug_type($a_bool), "\n";
-echo get_debug_type($a_str), "\n";
+class SampleClass {
+  private string $name;
+  private int $value = 2;
 
-// 数値であれば、4を足す
-if (is_int($an_int)) {
-    $an_int += 4;
+  private static string $myName = 'sample';
+
+  public function __construct($name) {
+    $this->name = $name;
+  }
+
+  public function getName() {
+    return $this->name . "\n";
+  }
+
+  public function showValue() {
+    echo "値：{$this->value}\n";
+    echo "静的な名前：" . self::$myName;
+  }
 }
-var_dump($an_int);
 
-// $a_bool が文字列であれば, それをprintする
-if (is_string($a_bool)) {
-    echo "String: $a_bool";
+
+
+class Person {
+  public function __construct(
+    public string $name,
+    public int $age
+  ){}
 }
-?>
+
+$person = new Person('塩', 31);
+
+echo $person->name;
