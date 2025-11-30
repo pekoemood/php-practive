@@ -1,34 +1,40 @@
 <?php
 
-class SampleClass {
-  private string $name;
-  private int $value = 2;
+class ExampleClass {
+  private $privateValue = 'これはprivateメンバーです';
 
-  private static string $myName = 'sample';
+  protected $protectedValue = 'これはprotectedValueです';
 
-  public function __construct($name) {
-    $this->name = $name;
-  }
-
-  public function getName() {
-    return $this->name . "\n";
-  }
-
-  public function showValue() {
-    echo "値：{$this->value}\n";
-    echo "静的な名前：" . self::$myName;
+  public function showValue(ExampleClass $obj) {
+    echo $obj->privateValue . "\n";
+    echo $obj->protectedValue . "\n";
   }
 }
 
+$example = new ExampleClass();
+$obj = new ExampleClass();
 
 
-class Person {
-  public function __construct(
-    public string $name,
-    public int $age
-  ){}
+class Animal {
+  public function sound(){
+    echo "動物の声\n";
+  }
+
+  protected function sleep() {
+    echo "ぐーぐー\n";
+  }
 }
 
-$person = new Person('塩', 31);
+class Dog extends Animal {
+  public function sound() {
+    echo "わんわん\n";
+  }
 
-echo $person->name;
+  public function callSleep() {
+    $this->sleep();
+  }
+}
+
+$dog = new Dog();
+$dog->sound();
+$dog->callSleep();
