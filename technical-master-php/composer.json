@@ -1,0 +1,18 @@
+{
+    "name": "vendor/test",
+    "description": "test",
+    "autoload": {
+        "psr-4": {
+            "Vendor\\Test\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "shio"
+        }
+    ],
+    "require": {
+        "nesbot/carbon": "^3.10",
+        "monolog/monolog": "^3.9"
+    }
+}

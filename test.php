@@ -1,40 +1,40 @@
 <?php
 
-class ExampleClass {
-  private $privateValue = 'これはprivateメンバーです';
+class Item {
+  public function __construct(private int $price) {}
 
-  protected $protectedValue = 'これはprotectedValueです';
-
-  public function showValue(ExampleClass $obj) {
-    echo $obj->privateValue . "\n";
-    echo $obj->protectedValue . "\n";
+  public function getPrice(): int {
+    return $this->price;
   }
 }
 
-$example = new ExampleClass();
-$obj = new ExampleClass();
+class ShoppingCart {
+  /** @var Item[] $items */
+  private array $items = [];
 
-
-class Animal {
-  public function sound(){
-    echo "動物の声\n";
+  public function addItem(Item $items): void {
+    $this->items[] = $items;
   }
 
-  protected function sleep() {
-    echo "ぐーぐー\n";
+  public function removeItem(Item $item): void {
+    $this->items = array_filter($this->items, fn(Item $v) => $v !== $item);
+  }
+
+  public function processPayment(string $paymentDetails): void {
+    $total = $this->calculateTotal();
+
+    echo "合計： {$total}円, {$paymentDetails}を使用して処理します\n";
+  }
+
+  private function calculateTotal(): int {
+    return array_reduce($this->items, fn($total, Item $item) => $total + $item->getPrice(), 0);
   }
 }
 
-class Dog extends Animal {
-  public function sound() {
-    echo "わんわん\n";
-  }
+$cart = new ShoppingCart();
+$item1 = new Item(100);
+$item2 = new Item(50);
 
-  public function callSleep() {
-    $this->sleep();
-  }
-}
-
-$dog = new Dog();
-$dog->sound();
-$dog->callSleep();
+$cart->addItem($item1);
+$cart->addItem($item2);
+$cart->processPayment('現金');
