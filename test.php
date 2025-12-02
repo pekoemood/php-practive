@@ -1,40 +1,51 @@
 <?php
 
-class Item {
-  public function __construct(private int $price) {}
+// // PaymentProcessorクラス：　支払い処理
+// class PaymentProcessor {
+//   public function processPayment(string $payment, int $amount): void {
+//     //支払い方法ごとに条件分岐して、書く支払い処理をここで行う
+//     if ($payment === 'credit_card') {
+//       //クレジットカードでの支払い処理
+//       echo "Paid $amount using Credit Card\n";
+//     } elseif ($payment === 'paypal') {
+//       //PayPalでの支払い処理
+//       echo "Paid $amount using PayPal\n";
+//     }
+//     //新しい支払い方法が追加されるたびに条件が増える
+//   }
+// }
 
-  public function getPrice(): int {
-    return $this->price;
+// $processor = new PaymentProcessor();
+// $processor->processPayment('credit_card', 500);
+
+interface PaymentInterface {
+  public function pay(int $amount): void;
+}
+
+//CreditCardPaymentクラス：　PaymentInterfaceを実装
+class CreditCardPayment implements PaymentInterface {
+  public function pay(int $amount): void {
+    echo "Paid {$amount} using Credit Card\n";
   }
 }
 
-class ShoppingCart {
-  /** @var Item[] $items */
-  private array $items = [];
-
-  public function addItem(Item $items): void {
-    $this->items[] = $items;
-  }
-
-  public function removeItem(Item $item): void {
-    $this->items = array_filter($this->items, fn(Item $v) => $v !== $item);
-  }
-
-  public function processPayment(string $paymentDetails): void {
-    $total = $this->calculateTotal();
-
-    echo "合計： {$total}円, {$paymentDetails}を使用して処理します\n";
-  }
-
-  private function calculateTotal(): int {
-    return array_reduce($this->items, fn($total, Item $item) => $total + $item->getPrice(), 0);
+class PayPalPayment implements PaymentInterface {
+  public function pay(int $amount): void {
+    echo "Paid {$amount} using PayPalPayment";
   }
 }
 
-$cart = new ShoppingCart();
-$item1 = new Item(100);
-$item2 = new Item(50);
+class PaymentProcessor {
+  public function processPayment(PaymentInterface $payment, int $amount): void {
+    $payment->pay($amount);
+  }
+}
 
-$cart->addItem($item1);
-$cart->addItem($item2);
-$cart->processPayment('現金');
+$creditCard = new CreditCardPayment();
+$payPalPayment = new PayPalPayment();
+
+$processor = new PaymentProcessor();
+$processor->processPayment($creditCard, 500);
+$processor->processPayment($payPalPayment, 1000);
+
+
