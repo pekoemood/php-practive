@@ -7,33 +7,19 @@ paths:
   /users:
     get:
       summary: すべてのユーザーを取得
-      description: 登録されているすべてのユーザーのリストを返します。
+      description: 登録されているすべてのユーザーのリストを返します
       responses:
-        '200':
+        '200': 
           description: ユーザーオブジェクトのJSON配列
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties: 
-                    id:
-                      type: string
-                      description: ユーザーの一意の識別子
-                    name:
-                      type: string
-                      description: ユーザーの名前
-                    email:
-                      type: string
-                      description: ユーザーのメールアドレス
-                  required:
-                    - id
-                    - name
-                    - email
+                  $ref: '#/components/schemas/User'
     post:
-      summary: 新しいユーザーを追加
-      description: システムに新しいユーザーを追加します。
+      summary: 新しいユーザーを作成
+      description: システムに新しいユーザーを追加します
       requestBody:
         description: システムに追加するためのユーザーオブジェクト
         required: true
@@ -59,21 +45,25 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  id:
-                    type: string
-                    description: ユーザーの一意の識別子
-                    example: ID_123456
-                  name:
-                    type: string
-                    description: ユーザーの名前
-                    example: サンプル太郎
-                  email:
-                    type: string
-                    description: ユーザーのメールアドレス
-                    example: sample@example.com
-                required:
-                  - id
-                  - name
-                  - email
+                $ref: '#/components/schemas/User'
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ユーザーの一意の識別子
+          example: ID_123456
+        name:
+          type: string
+          description: ユーザーの名前
+          example: サンプル太郎
+        email:
+          type: string
+          description: ユーザーのメールアドレス
+          example: sample@example.com
+      required:
+        - id
+        - name
+        - email
