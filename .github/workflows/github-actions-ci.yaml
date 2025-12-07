@@ -1,0 +1,8 @@
+name: GitHub Actions CI
+on: push
+jobs:
+  GitHub-Actions-CI:
+    runs-on: ubuntu-latest
+    steps:
+        - run: echo "Hello, GitHub Actions"
+        - uses: actions/checkout@v4

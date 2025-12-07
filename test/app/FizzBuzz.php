@@ -4,10 +4,15 @@ namespace App;
 
 class FizzBuzz {
   public function execute(int $number): string {
-    //3の倍数は、3で割った時に余りが０になるというのと同義
-    if ($number % 3 === 0) {
+    if ($number % 15 === 0) {
+      return 'FizzBuzz';
+    } elseif ($number % 3 === 0) {
       return 'Fizz';
+    } elseif ($number % 5 === 0) {
+      return 'Buzz';
+    } else {
+      return (string) $number;
     }
-    return (string) $number;
   }
 }
+
